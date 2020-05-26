@@ -17,9 +17,15 @@ Window::Window()
 	{
 		start_color();
 		attron(A_BOLD);
-		minerLabel = "Gornik ";
+		minerLabel[0] = "Dr Oetker";
+		minerLabel[1] = "Dr Dre";
+		minerLabel[2] = "Dr House";
+		minerLabel[3] = "Dr Dolittle";
+		minerLabel[4] = "Dr Wit";
+		minerLabel[5] = "Dr Lecter ";
+
 		leftSourcesLabel = "Pozostale zloza:\t";
-		trolleyLoadLabel = "Ladunek kolejki:  \t";
+		trolleyLoadLabel = "Ladunek kolejki: ";
 		getmaxyx(stdscr, rows, columns);
 		xPosTunelFromPlace = columns / 2;
 		yPosTunelFromPlace = rows / 2 + 1;
@@ -70,9 +76,9 @@ void Window::DrawBorders()
 		int door2 = 10;
 		int door3 = 18;
 		if(MakeDoor(door1, door2, door3, i)) {
-			mvprintw(rows - i -1, columns - 20 , "");
+			mvprintw(rows - i -1, columns - 21 , "");
 		} else {
-			mvprintw(rows - i -1, columns - 20 , "|");
+			mvprintw(rows - i -1, columns - 21 , "|");
 		}
 	}
 
@@ -99,13 +105,13 @@ void Window::DrawBorders()
 	}
 
 	//prawa ściana dolna
-	for (int i = columns; i > columns -20; i--)
+	for (int i = columns; i > columns -21; i--)
 	{
-		mvprintw(rows -8 , i, "_");
+		mvprintw(rows -9 , i, "_");
 	}
 
 	//prawa ściana górna
-	for (int i = columns; i > columns -20; i--)
+	for (int i = columns; i > columns -21; i--)
 	{
 		mvprintw(rows -17 , i, "_");
 	}
@@ -113,7 +119,7 @@ void Window::DrawBorders()
 	//lewa ściana dolna
 	for (int i = 0; i < 20; i++)
 	{
-		mvprintw(rows -8 , i, "_");
+		mvprintw(rows -9 , i, "_");
 	}
 
 	// lewa ściana górna
@@ -237,11 +243,11 @@ void Window::DrawMiners()
 
 char *Window::MinersLabel(int indexOfMiner, Miner* miner)
 {
-	// std::stringstream bufferLabel;
-	// std::string temporaryLabelInString;
-	// bufferLabel << minerLabel << indexOfMiner + 1 << ":\t" << miner->GetdugCoal() << "/" << miners[indexOfMiner]->GetbasketCapacity();
-	// temporaryLabelInString = bufferLabel.str();
-	// strcpy(charArrayMinersLabel, temporaryLabelInString.c_str());
+	std::stringstream bufferLabel;
+	std::string temporaryLabelInString;
+	bufferLabel << minerLabel[indexOfMiner] <<  ": " << miner->GetdugCoal() << "/" << miners[indexOfMiner]->GetbasketCapacity();
+	temporaryLabelInString = bufferLabel.str();
+	strcpy(charArrayMinersLabel, temporaryLabelInString.c_str());
 	return charArrayMinersLabel;
 }
 
@@ -252,16 +258,16 @@ char *Window::CoalLabel()
 	// bufferLabel << leftSourcesLabel << sourcesLeft << "/880";
 	// temporaryLabelInString = bufferLabel.str();
 	// strcpy(charArrayCoalLabel, temporaryLabelInString.c_str());
-	return charArrayCoalLabel;
+	// return charArrayCoalLabel;
 }
 
 char *Window::TrolleyLabel()
 {
-	// std::stringstream bufferLabel;
-	// std::string temporaryLabelInString;
-	// bufferLabel << trolleyLoadLabel << trolleyLoad << "/300";
-	// temporaryLabelInString = bufferLabel.str();
-	// strcpy(charArrayTrolleyLabel, temporaryLabelInString.c_str());
+	std::stringstream bufferLabel;
+	std::string temporaryLabelInString;
+	bufferLabel << trolleyLoadLabel << trolleyLoad << "/300";
+	temporaryLabelInString = bufferLabel.str();
+	strcpy(charArrayTrolleyLabel, temporaryLabelInString.c_str());
 	return charArrayTrolleyLabel;
 }
 
@@ -274,18 +280,25 @@ void Window::DrawTables()
 	init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
 	init_pair(6, COLOR_WHITE, COLOR_BLACK);
 
-	// for (int i = 0; i < miners.size(); i++)
-	// {
-	// 	attron(COLOR_PAIR(i + 1));
-	// 	mvprintw(rows / 4 + 2 * i + 2, 2, MinersLabel(i, miners[i]));
-	// 	attroff(COLOR_PAIR(i));
-	// }
+	for (int i = 0; i < miners.size()/2; i++)
+	{
+		attron(COLOR_PAIR(i + 1));
+		mvprintw(1 + 8 * i, 1, MinersLabel(i, miners[i]));
+		attroff(COLOR_PAIR(i));
+	}
+
+	for (int i = miners.size()/2; i < miners.size(); i++)
+	{
+		attron(COLOR_PAIR(i + 1));
+		mvprintw(1 + 8 * i - 24, columns - 18, MinersLabel(i, miners[i]));
+		attroff(COLOR_PAIR(i));
+	}
 }
 
 void Window::DisplayGlobalData()
 {
-	//mvprintw(rows / 3, columns - 30, CoalLabel());
-	//mvprintw(rows / 3 + 2, columns - 30, TrolleyLabel());
+	// mvprintw(rows / 3, columns - 30, CoalLabel());
+	mvprintw( 1, columns / 2 - 11, TrolleyLabel());
 }
 
 void Window::DrawScene()

@@ -18,6 +18,7 @@ bool isTheTrolleyOccupied = false;
 bool isTrolleyLocked = false;
 
 std::vector<std::thread> minersThreads;
+std::vector<std::thread> labThreads;
 std::mutex diggingMutex;
 std::mutex unloadingCoalMutex;
 std::mutex notFinished;
@@ -135,14 +136,18 @@ void SendMinerToWork(int indexOfMiner)
 			{
 				miners[indexOfMiner]->Dig(miners[indexOfMiner]->GetspeedOfDigging());
 			}
-			else miners[indexOfMiner]->Dig(miners[indexOfMiner]->GetbasketCapacity() - miners[indexOfMiner]->GetdugCoal());
+			else {
+				miners[indexOfMiner]->Dig(miners[indexOfMiner]->GetbasketCapacity() - miners[indexOfMiner]->GetdugCoal());
+				miners[indexOfMiner]->StartExperiment();
+			} 
+			
 		}
 		lockForDigging.unlock();
 
 		if (IsMinersBasketFull(indexOfMiner) /* || sourcesLeft == 0*/)
 		{
 			miners[indexOfMiner]->GoToTheTrolley(); // górnik musi dochodzić prędzej
-
+			miners[indexOfMiner]->StopExperiment();
 			std::unique_lock<std::mutex> lockForUnloadingCoal(unloadingCoalMutex);
 			if (!isTheTrolleyOccupied)
 			{
@@ -180,6 +185,7 @@ void SendMinerToWork(int indexOfMiner)
 	}
 }
 
+
 void CreateMiners()
 {
 	srand(time(NULL));
@@ -187,6 +193,7 @@ void CreateMiners()
 	{
 		miners.push_back(new Miner(4 + i*8, columns / 4 - 8 , rand() % 300 + 100, i));
 		minersThreads.push_back(std::thread(SendMinerToWork, i));
+		// labThreads.push_back(std::thread(StartExperiment, i));
 	}
 
 	for (int i = 3; i < 6; i++)

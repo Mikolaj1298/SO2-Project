@@ -277,3 +277,13 @@ void Miner::LockThePlaceInQueue(int nrOfPlace)
 {
 	isThisPlaceOccupied[nrOfPlace] = true;
 }
+
+void Miner::StartExperiment()
+{
+	activeExperiment = true;
+}
+
+void Miner::StopExperiment()
+{
+	activeExperiment = false;
+}

@@ -13,6 +13,7 @@ class Miner
 	int speedOfDigging;
 	int xPosOfWorkingPlace;
 	int yPosOfWorkingPlace;
+	bool activeExperiment;
 
 public:
 	Miner(int posX, int posY, int speedOfDiggingChoice, int floor);
@@ -43,6 +44,8 @@ public:
 	void LockTheTrolley();
 	void ReleaseTheTrolley();
 	void LockThePlaceInQueue(int nrOfPlace);
+	void StopExperiment();
+	void StartExperiment();
 };
 
 #endif // MINER_HPP

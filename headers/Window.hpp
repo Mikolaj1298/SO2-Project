@@ -14,7 +14,7 @@ class Window
 	int rows;
 	int columns;
 	int trolleyDisplacement;
-	std::string minerLabel;
+	std::string minerLabel[6];
 	std::string leftSourcesLabel;
 	std::string trolleyLoadLabel;
 	char charArrayMinersLabel[20];
