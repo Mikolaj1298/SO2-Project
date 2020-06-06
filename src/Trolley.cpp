@@ -1,11 +1,16 @@
 #include "../headers/Trolley.hpp"
+#include "../headers/Lab.hpp"
 
 extern int trolleyLoad;
+extern int thermocyclerRun;
+
 
 Trolley::Trolley()
 {
 	getmaxyx(stdscr, rows, columns);
 	actual = 6;
+	offset = 0;
+	runCounter = 0;
 }
 
 Trolley::~Trolley() { }
@@ -47,35 +52,33 @@ void Trolley::StopTrolley()
 
 void Trolley::DrawTrolley()
 {
-	
-	
 	attron(COLOR_PAIR(actual));
 	mvprintw(rows/2-2, columns/2-4, "|");
 	mvprintw(rows/2-1, columns/2-4, "|");
-	attron(COLOR_PAIR(1));
+	attron(COLOR_PAIR(((offset + 0)%6)+1));
 	mvprintw(rows/2-1, columns/2-1, "o");
 	attron(COLOR_PAIR(actual));
 	mvprintw(rows/2-0, columns/2-4, "|");
-	attron(COLOR_PAIR(2));
+	attron(COLOR_PAIR(((offset + 1)%6)+1));
 	mvprintw(rows/2-0, columns/2-2, "o");
 	attron(COLOR_PAIR(actual));
 	
 	mvprintw(rows/2+1, columns/2-4, "|");
-	attron(COLOR_PAIR(3));
+	attron(COLOR_PAIR(((offset + 2)%6)+1));
 	mvprintw(rows/2+1, columns/2-1, "o");
 	attron(COLOR_PAIR(actual));
 	mvprintw(rows/2+2, columns/2-4, "|");
 	
 	mvprintw(rows/2-2, columns/2+4, "|");
-	attron(COLOR_PAIR(4));
+	attron(COLOR_PAIR(((offset + 3)%6)+1));
 	mvprintw(rows/2-1, columns/2+1, "o");
 	attron(COLOR_PAIR(actual));
 	mvprintw(rows/2-1, columns/2+4, "|");
-	attron(COLOR_PAIR(5));
+	attron(COLOR_PAIR(((offset + 4)%6)+1));
 	mvprintw(rows/2-0, columns/2+2, "o");
 	attron(COLOR_PAIR(actual));
 	mvprintw(rows/2-0, columns/2+4, "|");
-	attron(COLOR_PAIR(6));
+	attron(COLOR_PAIR(((offset + 5)%6)+1));
 	mvprintw(rows/2+1, columns/2+1, "o");
 	attron(COLOR_PAIR(actual));
 	mvprintw(rows/2+1, columns/2+4, "|");
@@ -107,8 +110,10 @@ void Trolley::UnloadTheTrolley()
 {
 	srand(time(NULL));
 	int partOfCoal;
+	thermocyclerRun++;
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 	actual = 6;
+	offset = 0;
 	while(trolleyLoad != 0 && runningLoop) // TUTAJ
 	{
 	    partOfCoal = rand() % 20 + 10;
@@ -119,8 +124,10 @@ void Trolley::UnloadTheTrolley()
 		}
 
 		DecreaseTrolleyLoad(partOfCoal);
+		offset++;
 		std::this_thread::sleep_for(std::chrono::milliseconds(700));
 	}
+	offset = 0;
 }
 
 void Trolley::DecreaseTrolleyLoad(int valueOfDecreasement)
@@ -131,4 +138,9 @@ void Trolley::DecreaseTrolleyLoad(int valueOfDecreasement)
 void Trolley::SetWorkingScientist(int slot)
 {
 	actual = slot;
+}
+
+int Trolley::GetRunCounter()
+{
+	return runCounter;
 }

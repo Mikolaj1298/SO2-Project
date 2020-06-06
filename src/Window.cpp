@@ -6,6 +6,7 @@ bool runningLoop = true;
 int xPosTunelFromPlace;
 int yPosTunelFromPlace;
 int trolleyLoad = 0;
+int thermocyclerRun = 0;
 int sourcesLeft = 880;
 bool isThisPlaceOccupied[6];
 std::vector<Miner*> miners;
@@ -25,7 +26,8 @@ Window::Window()
 		minerLabel[5] = "Dr Lecter ";
 
 		leftSourcesLabel = "Pozostale zloza:\t";
-		trolleyLoadLabel = "Ladunek kolejki: ";
+		trolleyLoadLabel = "Pojemnosc termocyklera: ";
+		thermocyclerRunLabel = "Przebieg: ";
 		getmaxyx(stdscr, rows, columns);
 		xPosTunelFromPlace = columns / 2;
 		yPosTunelFromPlace = rows / 2 + 1;
@@ -240,7 +242,10 @@ void Window::DrawMiners()
 		mvprintw(miners[i]->GetposX()+1, miners[i]->GetposY(), "|");
 		mvprintw(miners[i]->GetposX()+1, miners[i]->GetposY()+1, "-");
 		mvprintw(miners[i]->GetposX()+1, miners[i]->GetposY()-1, "-");
-		mvprintw(miners[i]->GetposX()+1, miners[i]->GetposY()-2, "U");
+		if(miners[i]->CheckTube())
+		{
+			mvprintw(miners[i]->GetposX()+1, miners[i]->GetposY()-2, "U");
+		}
 		mvprintw(miners[i]->GetposX()+2, miners[i]->GetposY(), "^");
 		attroff(COLOR_PAIR(i + 1));
 	}
@@ -270,11 +275,24 @@ char *Window::TrolleyLabel()
 {
 	std::stringstream bufferLabel;
 	std::string temporaryLabelInString;
-	bufferLabel << trolleyLoadLabel << trolleyLoad << "/300";
+	bufferLabel << trolleyLoadLabel << trolleyLoad;
 	temporaryLabelInString = bufferLabel.str();
 	strcpy(charArrayTrolleyLabel, temporaryLabelInString.c_str());
 	return charArrayTrolleyLabel;
 }
+
+char *Window::ThermocyclerRunLabel()
+{
+	std::stringstream bufferLabel;
+	std::string temporaryLabelInString;
+	bufferLabel << thermocyclerRunLabel << thermocyclerRun;
+	temporaryLabelInString = bufferLabel.str();
+	strcpy(charArrayThermocyclerRunLabel, temporaryLabelInString.c_str());
+	return charArrayThermocyclerRunLabel;
+
+}
+
+
 
 void Window::DrawTables()
 {
@@ -304,6 +322,7 @@ void Window::DisplayGlobalData()
 {
 	// mvprintw(rows / 3, columns - 30, CoalLabel());
 	mvprintw( 1, columns / 2 - 11, TrolleyLabel());
+	mvprintw( 2, columns / 2 - 11, ThermocyclerRunLabel());
 }
 
 void Window::DrawScene()

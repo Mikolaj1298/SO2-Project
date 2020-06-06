@@ -16,10 +16,12 @@ class Window
 	int trolleyDisplacement;
 	std::string minerLabel[6];
 	std::string leftSourcesLabel;
+	std::string thermocyclerRunLabel;
 	std::string trolleyLoadLabel;
 	char charArrayMinersLabel[20];
 	char charArrayCoalLabel[20];
 	char charArrayTrolleyLabel[20];
+	char charArrayThermocyclerRunLabel[20];
 
 public:
 	Window();
@@ -36,6 +38,7 @@ public:
 	char *MinersLabel(int indexOfMiner, Miner* miner);
 	char *CoalLabel();
 	char *TrolleyLabel();
+	char *ThermocyclerRunLabel();
 	void DisplayGlobalData();
 	void DrawQueueOfMiners(); // ogarnąć kolejkowanie czekających górników
 	void MakeQueueEmpty();

@@ -14,9 +14,10 @@ class Miner
 	int xPosOfWorkingPlace;
 	int yPosOfWorkingPlace;
 	bool activeExperiment;
+	bool hasTube;
 
 public:
-	Miner(int posX, int posY, int speedOfDiggingChoice, int floor);
+	Miner(int posX, int posY, int speedOfDiggingChoice, int floor, bool hasTube);
 	~Miner();
 	int GetdugCoal();
 	void DecreasedugCoal(int decreasementValue);
@@ -46,6 +47,8 @@ public:
 	void LockThePlaceInQueue(int nrOfPlace);
 	void StopExperiment();
 	void StartExperiment();
+	bool CheckTube();
+	void SetTube(bool tube);
 };
 
 #endif // MINER_HPP

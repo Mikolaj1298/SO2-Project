@@ -9,6 +9,8 @@ class Trolley
 	int trolleyDisplacement;
 	int actual;
 	int offset;
+	int runCounter;
+	
 
 public:
 	Trolley();
@@ -20,4 +22,5 @@ public:
 	void UnloadTheTrolley();
 	void DecreaseTrolleyLoad(int valueOfDecreasement);
 	void SetWorkingScientist(int slot);
+	int GetRunCounter();
 };

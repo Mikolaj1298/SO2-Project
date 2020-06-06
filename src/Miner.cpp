@@ -12,17 +12,19 @@ extern int rows;
 extern int floor;
 extern int columns;
 extern bool isThisPlaceOccupied[6];
+extern int runCompleted;
 
-Miner::Miner(int posX, int posY, int speedOfDiggingChoice, int floor)
+Miner::Miner(int posX, int posY, int speedOfDiggingChoice, int floor, bool activeTube)
 {
 	this->posX = posX;
 	this->posY = posY;
 	this->floor = floor;
+	hasTube = activeTube;
 	xPosOfWorkingPlace = posX;
 	yPosOfWorkingPlace = posY;
 	InitializeSpeedOfDigging(speedOfDiggingChoice);
 	dugCoal = 0;
-	InitializeBasketCapacity(rand() % 300 + 100);
+	InitializeBasketCapacity(rand() % 2);
 }
 
 Miner::~Miner() { }
@@ -38,9 +40,8 @@ void Miner::InitializeSpeedOfDigging(int choice)
 
 void Miner::InitializeBasketCapacity(int choice)
 {
-	if (choice % 3 == 0) basketCapacity = 35;
-	else if (choice % 3 == 1) basketCapacity = 40;
-	else basketCapacity = 50;
+	if (choice == 0) basketCapacity = 60;
+	else basketCapacity = 20;
 }
 
 int Miner::GetspeedOfDigging()
@@ -214,12 +215,13 @@ void Miner::GoToWorkingPlace()
 void Miner::FillTheTrolleyWithCoal()
 {
 	// górnik jednorazowo może wyrzucić od 1 do 5 jednostek węgla
+	hasTube = false;
 	srand(time(NULL));
 	int randomCoalDecreasement = rand() % 5 + 1;
 
-	if (randomCoalDecreasement >= (300 - trolleyLoad))
+	if (randomCoalDecreasement >= (100 - trolleyLoad))
 	{
-		randomCoalDecreasement = 300 - trolleyLoad;
+		randomCoalDecreasement = 100 - trolleyLoad;
 	}
 	else if (randomCoalDecreasement >= GetdugCoal())
 	{
@@ -286,4 +288,14 @@ void Miner::StartExperiment()
 void Miner::StopExperiment()
 {
 	activeExperiment = false;
+}
+
+bool Miner::CheckTube()
+{
+	return hasTube;
+}
+
+void Miner::SetTube(bool tube)
+{
+	hasTube = tube;
 }

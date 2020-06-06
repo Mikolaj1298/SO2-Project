@@ -6,6 +6,7 @@
 #include "./headers/Window.hpp"
 #include "./headers/Trolley.hpp"
 
+
 extern int rows;
 extern int columns;
 extern bool runningLoop;
@@ -71,7 +72,7 @@ void MoveTrolley()
 	while(runningLoop)
 	{
 		std::unique_lock<std::mutex> lockTrolley(trolleyMutex);
-		if (trolleyLoad == 300)
+		if (trolleyLoad == 100)
 		{
 			isTrolleyLocked = true;
 		}
@@ -129,7 +130,7 @@ void SendMinerToWork(int indexOfMiner)
 	while(runningLoop && sourcesLeft >= 0 && miners[indexOfMiner]->GetdugCoal() <= miners[indexOfMiner]->GetbasketCapacity())
 	{
 		std::unique_lock<std::mutex> lockForDigging(diggingMutex);
-
+		miners[indexOfMiner]->SetTube(true);
 		if (RightAmountOfCoalDug(indexOfMiner))
 		{
 			if (CheckIfMinerDugEnough(indexOfMiner))
@@ -167,7 +168,7 @@ void SendMinerToWork(int indexOfMiner)
 		  	{
 		  		while(miners[indexOfMiner]->GetdugCoal() != 0)
 				{
-					if (trolleyLoad != 300 && !isTrolleyLocked)
+					if (trolleyLoad != 100 && !isTrolleyLocked)
 					{
 						miners[indexOfMiner]->FillTheTrolleyWithCoal();
 						trolley->SetWorkingScientist(indexOfMiner+1);
@@ -192,14 +193,14 @@ void CreateMiners()
 	srand(time(NULL));
 	for (int i = 0; i < 3; i++)
 	{
-		miners.push_back(new Miner(4 + i*8, columns / 4 - 8 , rand() % 300 + 100, i));
+		miners.push_back(new Miner(4 + i*8, columns / 4 - 8 , rand() % 300 + 100, i, true));
 		minersThreads.push_back(std::thread(SendMinerToWork, i));
 		// labThreads.push_back(std::thread(StartExperiment, i));
 	}
 
 	for (int i = 3; i < 6; i++)
 	{
-		miners.push_back(new Miner(-20 + i*8, columns  - 13, rand() % 300 + 100, i-3));
+		miners.push_back(new Miner(-20 + i*8, columns  - 13, rand() % 300 + 100, i-3, true));
 		minersThreads.push_back(std::thread(SendMinerToWork, i));
 	}
 }
