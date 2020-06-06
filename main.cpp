@@ -1,6 +1,7 @@
 #include <thread>
 #include <ctime>
 #include <mutex>
+#include <vector>
 #include <condition_variable>
 #include "./headers/GlobalData.hpp"
 #include "./headers/Window.hpp"

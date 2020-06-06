@@ -1,9 +1,20 @@
 #include "../headers/Trolley.hpp"
 #include "../headers/Lab.hpp"
+#include <vector>
 
 extern int trolleyLoad;
 extern int thermocyclerRun;
-
+extern int rows;
+extern int columns;
+extern bool runningLoop;
+extern int sourcesLeft;
+extern int trolleyLoad;
+extern bool isTheTrolleyOccupied;
+extern bool isTrolleyLocked;
+extern std::vector<Miner*> miners;
+extern int xPosTunelFromPlace;
+extern int yPosTunelFromPlace;
+extern bool isThisPlaceOccupied[6];
 
 Trolley::Trolley()
 {

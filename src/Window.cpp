@@ -1,4 +1,5 @@
 #include "../headers/Window.hpp"
+#include <vector>
 
 int rows = 0;
 int columns = 0;
