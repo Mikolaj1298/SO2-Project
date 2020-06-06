@@ -5,6 +5,7 @@ extern int trolleyLoad;
 Trolley::Trolley()
 {
 	getmaxyx(stdscr, rows, columns);
+	actual = 6;
 }
 
 Trolley::~Trolley() { }
@@ -25,6 +26,7 @@ void Trolley::GetTrolleyBack()
 
 void Trolley::TakeTrolleyAway()
 {
+	actual = 1;
 	trolleyDisplacement = 1;
 	for (int i = 0; i < 50; i++)
 	{
@@ -45,19 +47,60 @@ void Trolley::StopTrolley()
 
 void Trolley::DrawTrolley()
 {
-	// for (int i = 0; i < 50; i++)
-	// {
-	// 	mvprintw(rows / 2 + 5, columns / 2 - 9 + i, "_");
-	// }
+	
+	
+	attron(COLOR_PAIR(actual));
+	mvprintw(rows/2-2, columns/2-4, "|");
+	mvprintw(rows/2-1, columns/2-4, "|");
+	attron(COLOR_PAIR(1));
+	mvprintw(rows/2-1, columns/2-1, "o");
+	attron(COLOR_PAIR(actual));
+	mvprintw(rows/2-0, columns/2-4, "|");
+	attron(COLOR_PAIR(2));
+	mvprintw(rows/2-0, columns/2-2, "o");
+	attron(COLOR_PAIR(actual));
+	
+	mvprintw(rows/2+1, columns/2-4, "|");
+	attron(COLOR_PAIR(3));
+	mvprintw(rows/2+1, columns/2-1, "o");
+	attron(COLOR_PAIR(actual));
+	mvprintw(rows/2+2, columns/2-4, "|");
+	
+	mvprintw(rows/2-2, columns/2+4, "|");
+	attron(COLOR_PAIR(4));
+	mvprintw(rows/2-1, columns/2+1, "o");
+	attron(COLOR_PAIR(actual));
+	mvprintw(rows/2-1, columns/2+4, "|");
+	attron(COLOR_PAIR(5));
+	mvprintw(rows/2-0, columns/2+2, "o");
+	attron(COLOR_PAIR(actual));
+	mvprintw(rows/2-0, columns/2+4, "|");
+	attron(COLOR_PAIR(6));
+	mvprintw(rows/2+1, columns/2+1, "o");
+	attron(COLOR_PAIR(actual));
+	mvprintw(rows/2+1, columns/2+4, "|");
+	mvprintw(rows/2+2, columns/2+4, "|");
 
-	// for (int i = 0; i < 2; i++)
-	// {
-	// 	mvprintw(rows / 2 + 3 + i, columns / 2 - 10 + trolleyDisplacement, "|");
-	// 	mvprintw(rows / 2 + 3 + i, columns / 2 + trolleyDisplacement, "|");
-	// }
+	mvprintw(rows/2+2, columns/2+3, "-");
+	mvprintw(rows/2+2, columns/2+2, "-");
+	mvprintw(rows/2+2, columns/2+1, "-");
+	mvprintw(rows/2+2, columns/2, "-");
+	mvprintw(rows/2+2, columns/2-1, "-");
+	mvprintw(rows/2+2, columns/2-2, "-");
+	mvprintw(rows/2+2, columns/2-3, "-");
+	
+	mvprintw(rows/2-2, columns/2+3, "-");
+	mvprintw(rows/2-2, columns/2+2, "-");
+	mvprintw(rows/2-2, columns/2+1, "-");
+	mvprintw(rows/2-2, columns/2, "-");
+	// mvprintw(rows/2-1, columns/2, "o");
+	mvprintw(rows/2-2, columns/2-1, "-");
+	mvprintw(rows/2-2, columns/2-2, "-");
+	mvprintw(rows/2-2, columns/2-3, "-");
 
-	// mvprintw(rows / 2 + 5, columns / 2 - 10 + trolleyDisplacement, "o");
-	// mvprintw(rows / 2 + 5, columns / 2 + trolleyDisplacement, "o");
+	
+	mvprintw(rows/2, columns/2, "X");
+	attron(COLOR_PAIR(6));
 }
 
 void Trolley::UnloadTheTrolley()
@@ -65,6 +108,7 @@ void Trolley::UnloadTheTrolley()
 	srand(time(NULL));
 	int partOfCoal;
 	std::this_thread::sleep_for(std::chrono::seconds(1));
+	actual = 6;
 	while(trolleyLoad != 0 && runningLoop) // TUTAJ
 	{
 	    partOfCoal = rand() % 20 + 10;
@@ -82,4 +126,9 @@ void Trolley::UnloadTheTrolley()
 void Trolley::DecreaseTrolleyLoad(int valueOfDecreasement)
 {
 	trolleyLoad -= valueOfDecreasement;
+}
+
+void Trolley::SetWorkingScientist(int slot)
+{
+	actual = slot;
 }

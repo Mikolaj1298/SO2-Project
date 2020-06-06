@@ -7,6 +7,8 @@
 class Trolley
 {
 	int trolleyDisplacement;
+	int actual;
+	int offset;
 
 public:
 	Trolley();
@@ -17,4 +19,5 @@ public:
 	void DrawTrolley();
 	void UnloadTheTrolley();
 	void DecreaseTrolleyLoad(int valueOfDecreasement);
+	void SetWorkingScientist(int slot);
 };

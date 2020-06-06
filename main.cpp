@@ -79,9 +79,9 @@ void MoveTrolley()
 
 		if (isTrolleyLocked)
 		{
-			trolley->TakeTrolleyAway();
+			// trolley->TakeTrolleyAway();
 			trolley->UnloadTheTrolley();
-			trolley->GetTrolleyBack();
+			// trolley->GetTrolleyBack();
 			isTrolleyLocked = false;
 			trolleyNotAvailableSignal.notify_one();
 		}
@@ -170,6 +170,7 @@ void SendMinerToWork(int indexOfMiner)
 					if (trolleyLoad != 300 && !isTrolleyLocked)
 					{
 						miners[indexOfMiner]->FillTheTrolleyWithCoal();
+						trolley->SetWorkingScientist(indexOfMiner+1);
 						std::this_thread::sleep_for(std::chrono::milliseconds(400));
 					}
 				}

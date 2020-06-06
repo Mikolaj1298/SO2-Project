@@ -69,6 +69,8 @@ void Window::DrawCoal()
 
 void Window::DrawBorders()
 {
+	attron(COLOR_PAIR(0));
+
 	//prawa pionowa ściana
 	for (int i = 0; i < rows; i++)
 	{
@@ -162,35 +164,38 @@ void Window::DrawLab(int y, int x){
 }
 
 void Window::MakeThermocycler(){
-	mvprintw(rows/2-2, columns/2-4, "|");
-	mvprintw(rows/2-1, columns/2-4, "|");
-	mvprintw(rows/2-0, columns/2-4, "|");
-	mvprintw(rows/2+1, columns/2-4, "|");
-	mvprintw(rows/2+2, columns/2-4, "|");
+	// attron(COLOR_PAIR(1 + 1));
+	// mvprintw(rows/2-2, columns/2-4, "|");
+	// mvprintw(rows/2-1, columns/2-4, "|  o");
+	// mvprintw(rows/2-0, columns/2-4, "| o");
+	// mvprintw(rows/2+1, columns/2-4, "|  o");
+	// mvprintw(rows/2+2, columns/2-4, "|");
 	
-	mvprintw(rows/2-2, columns/2+4, "|");
-	mvprintw(rows/2-1, columns/2+4, "|");
-	mvprintw(rows/2-0, columns/2+4, "|");
-	mvprintw(rows/2+1, columns/2+4, "|");
-	mvprintw(rows/2+2, columns/2+4, "|");
+	// mvprintw(rows/2-2, columns/2+4, "|");
+	// mvprintw(rows/2-1, columns/2+1, "o  |");
+	// mvprintw(rows/2-0, columns/2+2, "o |");
+	// mvprintw(rows/2+1, columns/2+1, "o  |");
+	// mvprintw(rows/2+2, columns/2+4, "|");
 
-	mvprintw(rows/2+2, columns/2+3, "-");
-	mvprintw(rows/2+2, columns/2+2, "-");
-	mvprintw(rows/2+2, columns/2+1, "-");
-	mvprintw(rows/2+2, columns/2, "-");
-	mvprintw(rows/2+2, columns/2-1, "-");
-	mvprintw(rows/2+2, columns/2-2, "-");
-	mvprintw(rows/2+2, columns/2-3, "-");
+	// mvprintw(rows/2+2, columns/2+3, "-");
+	// mvprintw(rows/2+2, columns/2+2, "-");
+	// mvprintw(rows/2+2, columns/2+1, "-");
+	// mvprintw(rows/2+2, columns/2, "-");
+	// mvprintw(rows/2+2, columns/2-1, "-");
+	// mvprintw(rows/2+2, columns/2-2, "-");
+	// mvprintw(rows/2+2, columns/2-3, "-");
 	
-	mvprintw(rows/2-2, columns/2+3, "-");
-	mvprintw(rows/2-2, columns/2+2, "-");
-	mvprintw(rows/2-2, columns/2+1, "-");
-	mvprintw(rows/2-2, columns/2, "-");
-	mvprintw(rows/2-2, columns/2-1, "-");
-	mvprintw(rows/2-2, columns/2-2, "-");
-	mvprintw(rows/2-2, columns/2-3, "-");
+	// mvprintw(rows/2-2, columns/2+3, "-");
+	// mvprintw(rows/2-2, columns/2+2, "-");
+	// mvprintw(rows/2-2, columns/2+1, "-");
+	// mvprintw(rows/2-2, columns/2, "-");
+	// // mvprintw(rows/2-1, columns/2, "o");
+	// mvprintw(rows/2-2, columns/2-1, "-");
+	// mvprintw(rows/2-2, columns/2-2, "-");
+	// mvprintw(rows/2-2, columns/2-3, "-");
 
-	mvprintw(rows/2, columns/2, "O");
+	// mvprintw(rows/2, columns/2, "X");
+	// attron(COLOR_PAIR(1));
 
 	// mvprintw(rows/2+2, columns/2-2, "_");
 	// mvprintw(rows/2+2, columns/2+2, "|");
@@ -221,12 +226,12 @@ void Window::DrawPlaces() {
 
 void Window::DrawMiners()
 {
-	// init_pair(1, COLOR_RED, COLOR_BLACK);
-	init_pair(2, COLOR_GREEN, COLOR_BLACK);
-	init_pair(3, COLOR_YELLOW, COLOR_BLACK);
-	init_pair(4, COLOR_BLUE, COLOR_BLACK);
-	init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
-	init_pair(6, COLOR_WHITE, COLOR_BLACK);
+	// init_pair(, COLOR_RED, COLOR_BLACK);
+	// init_pair(1, COLOR_GREEN, COLOR_BLACK);
+	// init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+	// init_pair(4, COLOR_BLUE, COLOR_BLACK);
+	// init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
+	// init_pair(6, COLOR_WHITE, COLOR_BLACK);
 
 	for (int i = 0; i < miners.size(); i++)
 	{
